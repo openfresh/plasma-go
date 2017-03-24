@@ -1,0 +1,6 @@
+package: github.com/openfresh/plasma-go
+import:
+- package: github.com/pkg/errors
+  version: ^0.8.0
+- package: gopkg.in/redis.v5
+  version: ^5.2.9
