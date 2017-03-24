@@ -1,7 +1,7 @@
 plasma-go
 ==========
 
-[![Circle CI](https://circleci.com/gh/openfresh/plasma-go.svg?style=shield&circle-token=)](https://circleci.com/gh/openfresh/plasma-go)
+[![Circle CI](https://circleci.com/gh/openfresh/plasma-go.svg?style=shield&circle-token=7f90b2e2b3a5f88a34106550b52727cebce74bbc)](https://circleci.com/gh/openfresh/plasma-go)
 [![Language](https://img.shields.io/badge/language-go-brightgreen.svg?style=flat)](https://golang.org/)
 [![issues](https://img.shields.io/github/issues/openfresh/plasma-go.svg?style=flat)](https://github.com/openfresh/plasma-go/issues?state=open)
 [![License: MIT](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
