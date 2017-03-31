@@ -34,10 +34,23 @@ func newRedis(config config.Config) (Publisher, error) {
 	}, nil
 }
 
+// NOTE: If Go version less than 1.8, RawMessage marshals as base64
+// https://groups.google.com/forum/#!topic/Golang-Nuts/38ShOlhxAYY
+type internalPayload struct {
+	Meta event.MetaData   `json:"meta"`
+	Data *json.RawMessage `json:"data"`
+}
+
 // Publish sends payload to the redis channel
 func (r *Redis) Publish(payload event.Payload) error {
 	eventType := payload.Meta.Type
-	message, err := json.Marshal(payload)
+
+	p := internalPayload{
+		Meta: payload.Meta,
+		Data: &payload.Data,
+	}
+
+	message, err := json.Marshal(p)
 	if err != nil {
 		return errors.Wrap(err, "failed to marshal json")
 	}
