@@ -3,7 +3,6 @@ package plasma_client
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"testing"
 	"time"
 
@@ -59,21 +58,27 @@ func TestRedisPublish(t *testing.T) {
 	go func() {
 		msg, err := receive(conf)
 		if err != nil {
-			t.Fatal(err)
+			t.Error(err)
+			close(msgChan)
+			return
 		}
 		msgChan <- msg
 	}()
 
 	time.Sleep(10 * time.Millisecond)
 	if err := pub.Publish(payload); err != nil {
-		log.Fatal(err)
+		t.Fatal(err)
 	}
 
-	msg := <-msgChan
+	msg, ok := <-msgChan
+	if !ok {
+		t.Fatal("msgChan closed")
+		return
+	}
 
 	p := event.Payload{}
 	if err := json.Unmarshal([]byte(msg), &p); err != nil {
-		log.Fatal(err)
+		t.Fatal(err)
 	}
 
 	if p.Meta.Type != payload.Meta.Type {

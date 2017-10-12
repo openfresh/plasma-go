@@ -1,8 +1,6 @@
 package plasma_client
 
 import (
-	"fmt"
-
 	"github.com/openfresh/plasma-go/config"
 	"github.com/openfresh/plasma-go/event"
 	"github.com/pkg/errors"
@@ -20,8 +18,11 @@ func New(config config.Config) (Publisher, error) {
 	switch config.Type {
 	case TypeRedis:
 		publisher, err = newRedis(config)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to newRedis")
+		}
 	default:
-		return publisher, errors.Wrap(err, fmt.Sprintf("can't get such %s type publisher", config.Type))
+		return nil, errors.Wrapf(err, "can't get such %s type publisher", config.Type)
 	}
 
 	return publisher, nil
